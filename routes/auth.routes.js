@@ -3,7 +3,7 @@ const router = Router()
 const User = require('../models/User')
 const {check, validationResult} = require('express-validator')
 const bcrypt = require('bcryptjs')
-const jwtToken = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 router.post('/registration',
     [
@@ -67,7 +67,7 @@ router.post('/login',
 
             const { email, password } = req.body
 
-            const user = await user.findOne({ email })
+            const user = await User.findOne({ email })
 
             if(!user) {
                 return res.status(400).json({message: 'User with this email does not exist'})
@@ -81,7 +81,7 @@ router.post('/login',
 
             const jwtSecret = 'dghdfhsdfgwer33253frgdfzsgdfgh3464uyafh673254'
 
-            const token = jwtToken.sign(
+            const token = jwt.sign(
                 {userId: user.id},
                 jwtSecret,
                 {expiresIn: '1h'}

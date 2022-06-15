@@ -28,13 +28,22 @@ export default function AuthPage() {
             })
             .then(response => console.log(response))
         } catch (error) {
-            if (error.response) {
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            }
+            console.error(error)
         }
-    } 
+    }
+
+    const loginHandler = async () => {
+        try {
+            await axios.post('/api/auth/login', {...form, }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => console.log(response))
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
   return (
     <BrowserRouter>
@@ -70,6 +79,7 @@ export default function AuthPage() {
                             <div className="row">
                                 <button
                                     className='wawes-effect wawes-light btn green'
+                                    onClick={loginHandler}
                                 >
                                     Sign in
                                 </button>
